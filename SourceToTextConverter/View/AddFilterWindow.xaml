@@ -1,0 +1,45 @@
+﻿<Window x:Class="SrcToTextConverter.View.AddFilterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SrcToTextConverter.View"
+        xmlns:vm="clr-namespace:SrcToTextConverter.ViewModel"
+        xmlns:helpers="clr-namespace:SrcToTextConverter.Helpers" 
+        mc:Ignorable="d"
+        x:Name="Window"
+        Title="Add Filter"     
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Height="181" Width="300"       
+        FontSize="14">
+ 
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <DockPanel Grid.Row="0" Margin="0 0 0 10" LastChildFill="True">
+            <TextBlock Margin="0 0 10 0" Text="Name:"/>
+            <TextBox Text="{Binding Name}" MaxLength="10"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="1" Margin="0 0 0 10" LastChildFill="True">
+            <TextBlock Margin="0 0 10 0" Text="Extensions:"/>
+            <TextBox Text="{Binding Extensions}" ToolTip="Enter extensions separated by a Space. Example: .cpp .h"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="2" Margin="0 0 0 10" LastChildFill="True">
+            <TextBlock Margin="0 0 10 0" Text="Code Page:"/>
+            <TextBox Text="{Binding CodePage}" PreviewTextInput="CodePagePreviewTextInput" MaxLength="5"/>
+        </DockPanel>
+
+        <DockPanel Grid.Row="3" LastChildFill="False">
+            <Button Padding="5" DockPanel.Dock="Right" Content="Cancel" IsCancel="True"/>
+            <Button Margin="10 0" Padding="5" DockPanel.Dock="Right" Content="Ok" Command="{Binding OkCommand}" CommandParameter="{Binding ElementName=Window}"/>            
+        </DockPanel>
+    </Grid>
+</Window>
