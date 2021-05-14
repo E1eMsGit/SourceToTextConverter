@@ -178,6 +178,9 @@ namespace SrcToTextConverter.ViewModel
                 List<SourceFileModel> selectedSourceFiles = SourceFiles.Where(file => file.IsChecked == true).ToList();
                 ProgressBarMaxValue = selectedSourceFiles.Count();
                 StringBuilder content = new StringBuilder();
+                string[] pathArray = ProjectPathText.Split('\\');
+                string fileName = $"Source {pathArray[pathArray.Length - 1]}.txt";
+                string filePath = Path.Combine(_filesDirectory, fileName);
 
                 for (int i = 0; i < selectedSourceFiles.Count(); i++)
                 {
@@ -191,11 +194,8 @@ namespace SrcToTextConverter.ViewModel
                 }
 
                 ProgressBarValue = 0;
-               
-                string t = content.ToString();
-                string[] strArray = ProjectPathText.Split('\\');
-                string fileName = $"Source {strArray[strArray.Length - 1]}.txt";
-                File.WriteAllText(Path.Combine(_filesDirectory, fileName), t);
+
+                File.WriteAllText(filePath, content.ToString());
                 MessageBox.Show($"File saved to {_filesDirectory}", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                 
                 ProcessStartInfo processStartInfo = new ProcessStartInfo()
@@ -203,14 +203,12 @@ namespace SrcToTextConverter.ViewModel
                     CreateNoWindow = true,
                     WindowStyle = ProcessWindowStyle.Normal,
                     FileName = "explorer",
-                    Arguments = @"/n, /open, " + Path.Combine(_filesDirectory, fileName),
+                    Arguments = @"/n, /open, " + filePath,
                 };
-
                 Process process = new Process()
                 {
                     StartInfo = processStartInfo,
                 };
-
                 process.Start();
             });        
         }, canExecute =>  SourceFiles != null && SourceFiles.Count > 0);
